@@ -2,6 +2,13 @@
 #include <stdio.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <string.h>
+
+/**
+ * main - Entry point
+ *
+ * Return: Always 0 (Success)
+ */
 
 int main(void)
 {
@@ -9,26 +16,20 @@ int main(void)
 	size_t bufsize = 0;
 	ssize_t bytesread;
 
-	printf("  |\\    /|\n");
-    printf("   \\|___|/\n");
-    printf("  / 0   0 \\\n");
-	printf("  \\   Y   /\n");
-    printf(" ==\\__|__/==\n");
 	while (1)
 	{
-		if (isatty(STDIN_FILENO)) /* Vérifie si le shell tourne en mode "interactif" */
+		if (isatty(STDIN_FILENO))
 		{
-
-			printf("\xf0\x9f\x91\x8b\xf0\x9f\x98\x8e Best_Shell\xf0\x9f\x96\x95\xf0\x9f\x98\x8e\xf0\x9f\x96\x95 $ ");
+			printf("\xf0\x9f\x91\x8b\xf0\x9f\x98\x8e Best_Shell $ ");
 			bytesread = getline(&buffer, &bufsize, stdin);
-			if (bytesread == -1) 
-			{
-    	        perror("Error reading input");
-    	   	    exit(EXIT_FAILURE);
-			}
 		}
-		else
-			printf("./shell: No such file or directory");
+		if (bytesread == -1)
+		{
+			printf("\n");
+			break;
+		}
+		if (!strcmp(buffer, "exit\n"))
+			break;
 	}
 	return (0);
 }
