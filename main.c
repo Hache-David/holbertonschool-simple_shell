@@ -3,6 +3,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <string.h>
+#include "main.h"
 
 int main(void)
 {
@@ -19,32 +20,34 @@ int main(void)
 			printf("hsh $ ");
 		}
 
-		pid_number = fork();
-
 		bytesread = getline(&buffer, &bufsize, stdin);
 		
-		if (bytesread == -1) 
-		{
-			printf("\n");
-			break;
-		}
+			pid_number = fork();
 
-		if (!strcmp(buffer, "exit\n"))
-			break;
+
+			execl(return_PATH(), "ls", (char *)NULL);
+		
+			if (bytesread == -1) 
+			{
+				printf("\n");
+				break;
+			}
+
+			if (!strcmp(buffer, "exit\n"))
+				break;
 
 		
-		if (pid_number < 0)
-			printf("Error Fork\n");
+			if (pid_number < 0)
+				printf("Error Fork\n");
 
-		if (pid_number == 0)
-		{
-			printf("I am the son, my pid is %d\n", pid_number);
-		}
-		else
-		{
-			printf("I am the father, my pid is %d\n", pid_number);
-		}
-
+			if (pid_number == 0)
+			{
+				printf("I am the son, my pid is %d\n", pid_number);
+			}
+			else
+			{
+				printf("I am the father, my pid is %d\n", pid_number);
+			}
 	}
 	return (0);
 }
