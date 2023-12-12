@@ -4,32 +4,47 @@
 #include <stdlib.h>
 #include <string.h>
 
-/**
- * main - Entry point
- *
- * Return: Always 0 (Success)
- */
-
 int main(void)
 {
+	pid_t pid_number;
 	char *buffer = NULL;
 	size_t bufsize = 0;
 	ssize_t bytesread;
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO))
+		if (isatty(STDIN_FILENO)) /* Vérifie si le shell tourne en mode "interactif" */
 		{
-			printf("\xf0\x9f\x91\x8b\xf0\x9f\x98\x8e Best_Shell $ ");
-			bytesread = getline(&buffer, &bufsize, stdin);
+
+			printf("hsh $ ");
 		}
-		if (bytesread == -1)
+
+		pid_number = fork();
+
+		bytesread = getline(&buffer, &bufsize, stdin);
+		
+		if (bytesread == -1) 
 		{
 			printf("\n");
 			break;
 		}
+
 		if (!strcmp(buffer, "exit\n"))
 			break;
+
+		
+		if (pid_number < 0)
+			printf("Error Fork\n");
+
+		if (pid_number == 0)
+		{
+			printf("I am the son, my pid is %d\n", pid_number);
+		}
+		else
+		{
+			printf("I am the father, my pid is %d\n", pid_number);
+		}
+
 	}
 	return (0);
 }
