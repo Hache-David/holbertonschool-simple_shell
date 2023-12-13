@@ -15,7 +15,6 @@ int PATH_analyse(char *buffer_copy)
 	{
     	if (strcmp(entry->d_name , buffer_copy) == 0) 
         {
-            printf("L'entrée de l'utilisateur correspond à un fichier dans /bin/ : %s\n", entry->d_name);
             return (1);
 		}
 	}
