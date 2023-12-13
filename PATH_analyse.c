@@ -3,6 +3,7 @@
 #include <dirent.h>  
 #include <string.h>
 #include <fcntl.h>
+#include <stdio.h>
     
 int PATH_analyse(char *buffer_copy)
 {
@@ -14,7 +15,8 @@ int PATH_analyse(char *buffer_copy)
 	{
     	if (strcmp(entry->d_name , buffer_copy) == 0) 
         {
-            printf("L'entrée de l'utilisateur correspond à un fichier dans /bin/ : %s\n", entree->d_name);
+            printf("L'entrée de l'utilisateur correspond à un fichier dans /bin/ : %s\n", entry->d_name);
+            return (1);
 		}
 	}
     return (0);

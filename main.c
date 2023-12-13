@@ -4,23 +4,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include "main.h"
-
+#include <stddef.h>
+extern char **environ;
 int main(void)
 {
 	pid_t pid_number;
-	char *buffer = NULL;
 	size_t bufsize = 0;
 	ssize_t bytesread;
-	char *const argv[] = {"/bin/ls" , NULL};
-	char *const envp[] = {NULL};
-	char *token;
-	int counter = 0;
-	char **toks;
-	const char delimiters[] = " ";
-	int index = 0;
+	char *args[] = {"ls", NULL};
+	/*char *envp[] = {NULL};*/
+	size_t length = 0;
+	char *buffer = NULL;
 	char *buffer_copy;
-	int descripteur;
-	int read_file;
+	size_t index;
+	int return_value = 0;
 
 	while (1)
 	{
@@ -29,22 +26,28 @@ int main(void)
 			printf("hsh $ ");
 		}
 
-		bytesread = getline(&buffer, &bufsize, stdin);
+		bytesread = getline(&buffer, &bufsize, stdin); /* copie input in buffer */
 
-		while (buffer[index] != ' ')
-			index++;
+		if (bytesread == -1)
+			return (0);
+		while (buffer[length] != ' ' && buffer[length] != '\0') /* length of first command */
+			length++;
 	
-    		buffer_copy = malloc(sizeof(char) * index);
+    	buffer_copy = malloc(sizeof(char) * (length + 1));
+
+		if (buffer_copy == NULL)
+			return (0);
 	
-    	for (index = 0; buffer[index] != ' '; index++)
+    	for (index = 0; index < length; index++) /* copy command on buffer_copy */
 			buffer_copy[index] = buffer[index];
-	
-		if(PATH_analyse(buffer_copy))
+
+		return_value = PATH_analyse(buffer_copy);
+
+		if(return_value == 0)
 		{
+
 			pid_number = fork();
 
-			execve(return_PATH(buffer_copy), argv, envp);
-		
 			if (bytesread == -1) 
 			{
 				printf("\n");
@@ -54,17 +57,32 @@ int main(void)
 			if (!strcmp(buffer, "exit\n"))
 				break;
 
-		
-			if (pid_number < 0)
-				printf("Error Fork\n");
+			if (!strcmp(buffer, "env\n"))
+			{
+				char **env = environ;
+				while (*env != NULL)
+				{
+					printf("%s\n", *env);
+					env++;
+				}
+			}
 
+			if (pid_number < 0)
+			{
+				printf("Error Fork\n");
+				exit(EXIT_FAILURE);
+			}
 			if (pid_number == 0)
 			{
-				printf("I am the son, my pid is %d\n", pid_number);
+				printf ("%s", return_PATH(buffer_copy));
+				execve(return_PATH(buffer_copy), args, environ);
+				/*execve("/bin/ls", args , envp);*/
+				perror("execve");
+        		exit(EXIT_FAILURE);
 			}
 			else
 			{
-				printf("I am the father, my pid is %d\n", pid_number);
+				waitpid(pid_number, NULL, 0);
 			}
 		}
 	}

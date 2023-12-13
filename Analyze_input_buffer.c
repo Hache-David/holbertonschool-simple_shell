@@ -3,19 +3,18 @@
 #include <string.h>
 #include <stdlib.h>
 
-char *return_PATH(char *toks)
+char *return_PATH(const char *buffer_copy)
 {
-    char *PATH = "/bin/";
-    char *newstring;
+     char *PATH = "/usr/bin/";
+     char *newstring;
 
-    newstring = malloc(strlen(PATH) + strlen(toks) + 1);
+    newstring = malloc(strlen(PATH) + strlen(buffer_copy) + 1);
     if ( newstring == NULL)
         return (0);
-    if (toks == NULL)
+    if (buffer_copy == NULL)
         return (0);
     strcpy(newstring, PATH); 
-    strcat(newstring, toks);
+    strcat(newstring, buffer_copy);
 
     return (newstring);
-    /*return (execl("bin/%s", "%s", (char *)NULL));*/
 }
