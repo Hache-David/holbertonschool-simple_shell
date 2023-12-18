@@ -14,7 +14,7 @@ int main(void)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("\xF0\x9F\x8E\x85 Merry Christmas \xF0\x9F\x8E\x81 ");
+			printf("\xF0\x9F\x8E\x85 $ ");
 		bytesread = getline(&buffer, &bufsize, stdin);
 		if (bytesread == -1)
 		{
