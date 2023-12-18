@@ -20,7 +20,8 @@ int PATH_analyse(char *buffer)
 		perror("strdup");
 		return (0);
 	}
-
+	if (strncmp(buffer, "\\", 1))
+		return (1);
 	dir = strtok(path_copy, ":");
 	while (dir != NULL)
 	{

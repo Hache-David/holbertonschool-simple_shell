@@ -28,7 +28,10 @@ void execute_command(char *buffer)
 
 	if (pid_number == 0)
 	{
-		sprintf(command_path, "/bin/%s", args[0]);
+		if (strncmp(args[0], "/", 1) == 0)
+			sprintf(command_path, "%s", args[0]);
+		else
+			sprintf(command_path, "/bin/%s", args[0]);
 		execve(command_path, args, environ);
 		perror("execve");
 		exit(EXIT_FAILURE);
