@@ -14,7 +14,7 @@ int main(void)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("\xF0\x9F\x8E\x85 $ ");
+			printf("$ ");
 		bytesread = getline(&buffer, &bufsize, stdin);
 		if (bytesread == -1)
 		{
