@@ -14,14 +14,14 @@ int PATH_analyse(char *buffer)
 	char *path_copy, *dir;
 
 	path_copy = strdup(path_dirs);
-
 	if (path_copy == NULL)
 	{
 		perror("strdup");
-		return (0);
-	}
+		return (0); }
 	if (strncmp(buffer, "\\", 1))
-		return (1);
+	{
+		free(path_copy);
+		return (1); }
 	dir = strtok(path_copy, ":");
 	while (dir != NULL)
 	{
@@ -30,8 +30,7 @@ int PATH_analyse(char *buffer)
 		{
 			perror("opendir");
 			free(path_copy);
-			return (0);
-		}
+			return (0); }
 
 		while ((entry = readdir(directory)) != NULL)
 		{
