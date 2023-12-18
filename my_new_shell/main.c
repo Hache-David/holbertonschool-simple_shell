@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <stdlib.h>
+
 extern char **environ;
 
 int main(void)
@@ -10,8 +12,11 @@ int main(void)
     size_t buffer_size = 0;
     ssize_t prompt;
 	pid_t pid;
-	char *argv[] = {"/bin/ls", "-l", NULL}; // tokéniser ça //
+	char **argv; // tokéniser ça //
 	int check_exec;
+	char *token;
+	int index_token = 0;
+	size_t len_token;
 
     while(1)
     {
@@ -23,9 +28,17 @@ int main(void)
             printf("\n");
             break;
         }
-
-        // check if command is true //
 		//--> tokenisation ://
+		token = strtok(buffer, " ");
+
+		while (token) // copie chaque token dans argv pour exceve //
+		{
+			argv[index_token] = malloc(sizeof(char) * strlen(token));
+			argv[index_token] = token;
+			index_token++;
+			token = strtok(NULL, " "); // passer aux token suivant //
+		}
+		// check if command is true //
 
 		// fork my parent process //
 		pid = fork();
@@ -36,7 +49,7 @@ int main(void)
 		}
 		if (pid == 0) /* in child process */
 		{
-			check_exec = execve(argv[0] , argv, NULL);
+			check_exec = execve("/bin/ls" , argv, NULL); // /bin/ls remplacée par PATH //
 			if (check_exec == -1)
 				perror("./shell: No such file or directory");
 		}
