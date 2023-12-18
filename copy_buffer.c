@@ -18,6 +18,7 @@ char *buff_copy(char *buffer_copy, int length, char *buffer, int index)
 	buffer_copy = malloc(sizeof(char) * (length + 1));
 	if (buffer_copy == NULL)
 	{
+		free(buffer_copy);
 		perror("malloc");
 		return (NULL);
 	}
