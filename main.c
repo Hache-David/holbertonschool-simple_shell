@@ -6,54 +6,30 @@
 */
 int main(void)
 {
-	size_t bufsize = 0;
+	size_t bufsize = 0, length, index = 0;
 	ssize_t bytesread;
-	char *buffer = NULL;
-	char *buffer_copy;
-	size_t index;
-	int return_value = 0;
-	size_t length;
+	char *buffer = NULL, *buffer_copy;
+	int re_turn_value = 0;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-		{
-			printf("hsh $ ");
-			fflush(stdout);
-		}
-
+			printf("\xF0\x9F\x8E\x85 Merry Christmas \xF0\x9F\x8E\x81 ");
 		bytesread = getline(&buffer, &bufsize, stdin);
 		if (bytesread == -1)
 		{
 			printf("\n");
 			break;
 		}
-
 		buffer[bytesread - 1] = '\0';
-
 		length = 0;
-
-		while (buffer[length] != ' ' && buffer[length] != '\0')
-			length++;
-
-		buffer_copy = malloc(sizeof(char) * (length + 1));
-		if (buffer_copy == NULL)
+		buffer_copy = buff_copy(buffer_copy, length, buffer, index);
+		if (!strcmp(buffer_copy, "exit"))
+			exit(EXIT_FAILURE);
+		re_turn_value = PATH_analyse(buffer_copy);
+		if (re_turn_value == 1)
 		{
-			perror("malloc");
-			return (EXIT_FAILURE);
-		}
-
-		for (index = 0; index < length; index++)
-			buffer_copy[index] = buffer[index];
-
-		buffer_copy[length] = '\0';
-
-		return_value = PATH_analyse(buffer_copy);
-		if (return_value == 1)
-		{
-			if (!strcmp(buffer_copy, "exit"))
-				break;
-			else if (!strcmp(buffer_copy, "env"))
+			if (!strcmp(buffer_copy, "env"))
 				print_environment();
 			else if (!strcmp(buffer_copy, "cd"))
 			{
@@ -65,7 +41,6 @@ int main(void)
 		}
 		else
 			printf("%s: command not found\n", buffer_copy);
-
 		free(buffer_copy);
 	}
 	free(buffer);
