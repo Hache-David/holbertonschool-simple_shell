@@ -2,11 +2,11 @@
 /**
  * PATH_analyse - Function that check if the command in 'buffer' exists
  *		in the directories listed in the PATH environment variable.
- * @buffer: The command to check
+ * @buffer_copy: The command to check
  *
  * Return: 1 if the command is found , 0 otherwise
 */
-int PATH_analyse(char *buffer)
+int PATH_analyse(char *buffer_copy)
 {
 	DIR *directory;
 	struct dirent *entry;
@@ -18,7 +18,7 @@ int PATH_analyse(char *buffer)
 	{
 		perror("strdup");
 		return (0); }
-	if (strncmp(buffer, "\\", 1))
+	if (strncmp(buffer_copy, "/", 1) == 0)
 	{
 		free(path_copy);
 		return (1); }
@@ -28,13 +28,12 @@ int PATH_analyse(char *buffer)
 		directory = opendir(dir);
 		if (directory == NULL)
 		{
-			perror("opendir");
 			free(path_copy);
 			return (0); }
 
 		while ((entry = readdir(directory)) != NULL)
 		{
-			if (strcmp(entry->d_name, buffer) == 0)
+			if (strcmp(entry->d_name, buffer_copy) == 0)
 			{
 				closedir(directory);
 				free(path_copy);
