@@ -10,8 +10,8 @@
 #include <dirent.h>
 extern char **environ;
 
-int PATH_analyse(char *buffer);
-void execute_command(char *buffer);
+int PATH_analyse(char *buffer_copy);
+void execute_command(char *buffer, char *argv_zero);
 void print_environment(void);
 char *buff_copy(char *buffer_copy, int length, char *buffer, int index);
 
