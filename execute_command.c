@@ -2,9 +2,10 @@
 /**
  * execute_command - Function that execute the command specified in the buffer
  *
+ * @argv_zero: first argument of file main.
  * @buffer: The input buffer containing the command
 */
-void execute_command(char *buffer)
+void execute_command(char *buffer, char *argv_zero)
 {
 	pid_t pid_number;
 	char *args[32];
@@ -33,7 +34,7 @@ void execute_command(char *buffer)
 		else
 			sprintf(command_path, "/bin/%s", args[0]);
 		execve(command_path, args, environ);
-		perror("execve");
+		perror(argv_zero);
 		exit(EXIT_FAILURE);
 	}
 	else

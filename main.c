@@ -2,32 +2,36 @@
 /**
  * main - entry point
  *
+ *  @argv: value of argument.
+ *	@argc: number of input argument.
  * Return: 0 always succes.
 */
-int main(void)
+int main(int argc, char **argv)
 {
-	size_t bufsize = 0, length, index = 0;
+	size_t bufsize = 0, length = 0, index = 0;
 	ssize_t bytesread;
 	char *buffer = NULL, *buffer_copy;
-	int re_turn_value = 0;
 
+	if (argc == 0)
+		return (1);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("\xF0\x9F\x8E\x85 $ ");
+			printf("$ ");
 		bytesread = getline(&buffer, &bufsize, stdin);
 		if (bytesread == -1)
 		{
 			printf("\n");
-			break;
-		}
+			return (-1); }
 		buffer[bytesread - 1] = '\0';
 		length = 0;
 		buffer_copy = buff_copy(buffer_copy, length, buffer, index);
 		if (!strcmp(buffer_copy, "exit"))
-			exit(EXIT_FAILURE);
-		re_turn_value = PATH_analyse(buffer_copy);
-		if (re_turn_value == 1)
+		{
+			free(buffer_copy);
+			free(buffer);
+			exit(EXIT_FAILURE); }
+		if (PATH_analyse(buffer_copy)) /* PATH analyse don't work nikoumouk */
 		{
 			if (!strcmp(buffer_copy, "env"))
 				print_environment();
@@ -37,12 +41,11 @@ int main(void)
 					perror("cd");
 			}
 			else
-				execute_command(buffer);
+				execute_command(buffer, argv[0]);
 		}
 		else
-			printf("%s: command not found\n", buffer_copy);
-		free(buffer_copy);
-	}
+			printf("%s: %s: command not found\n", argv[0], buffer_copy);
+		free(buffer_copy); }
 	free(buffer);
 	return (0);
 }
