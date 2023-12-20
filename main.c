@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 		if (bytesread == -1)
 		{
 			/*printf("\n");*/
-			return (-1); }
+			return (0); }
 		buffer[bytesread - 1] = '\0', length = 0;
 		buffer_copy = buff_copy(buffer_copy, length, buffer, index);
 		if (buffer_copy == NULL)
