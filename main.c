@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 			else
 				execute_command(buffer, argv[0]);
 		}
-		else
+		else if (strlen(buffer_copy) != 0)
 			fprintf(stderr, "%s: %s: command not found\n", argv[0], buffer_copy);
 		free(buffer_copy); }
 	free(buffer);
