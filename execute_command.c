@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * execute_command - Function that execute the command specified in the buffer
  *
