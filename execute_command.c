@@ -19,8 +19,8 @@ void execute_command(char *buffer, char *argv_zero)
 		token = strtok(NULL, " ");
 	}
 	args[i] = NULL;
-	pid_number = fork();
 
+	pid_number = fork();
 	if (pid_number < 0)
 	{
 		perror("Error Fork\n");

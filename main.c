@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	char *buffer = NULL, *buffer_copy;
 
 	if (argc == 0)
-		return (1);
+		return (EXIT_FAILURE);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -26,12 +26,17 @@ int main(int argc, char **argv)
 		buffer[bytesread - 1] = '\0';
 		length = 0;
 		buffer_copy = buff_copy(buffer_copy, length, buffer, index);
+		if (buffer_copy == NULL)
+		{
+			free(buffer);
+			exit(EXIT_FAILURE);
+		}
 		if (!strcmp(buffer_copy, "exit"))
 		{
 			free(buffer_copy);
 			free(buffer);
-			exit(EXIT_FAILURE); }
-		if (PATH_analyse(buffer_copy)) /* PATH analyse don't work nikoumouk */
+			exit(EXIT_SUCCESS); }
+		if (PATH_analyse(buffer_copy))
 		{
 			if (!strcmp(buffer_copy, "env"))
 				print_environment();
@@ -44,8 +49,8 @@ int main(int argc, char **argv)
 				execute_command(buffer, argv[0]);
 		}
 		else
-			printf("%s: %s: command not found\n", argv[0], buffer_copy);
+			fprintf(stderr, "%s: %s: command not found\n", argv[0], buffer_copy);
 		free(buffer_copy); }
 	free(buffer);
-	return (0);
+	return (EXIT_SUCCESS);
 }
