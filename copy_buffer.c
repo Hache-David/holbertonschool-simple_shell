@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * buff_copy - copy entry first word in new string
  *
@@ -10,15 +9,14 @@
  *
  * Return: new string contain the first word.
 */
-
 char *buff_copy(char *buffer_copy, int length, char *buffer, int index)
 {
 	while (buffer[length] != ' ' && buffer[length] != '\0')
 		length++;
+
 	buffer_copy = malloc(sizeof(char) * (length + 1));
 	if (buffer_copy == NULL)
 	{
-		free(buffer_copy);
 		perror("malloc");
 		return (NULL);
 	}

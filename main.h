@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <dirent.h>
+
 extern char **environ;
 
 int PATH_analyse(char *buffer_copy);
