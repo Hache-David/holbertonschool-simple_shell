@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 		bytesread = getline(&buffer, &bufsize, stdin);
 		if (bytesread == -1)
 		{
-			printf("\n");
+			/*printf("\n");*/
 			return (-1); }
 		buffer[bytesread - 1] = '\0', length = 0;
 		buffer_copy = buff_copy(buffer_copy, length, buffer, index);
@@ -47,4 +47,4 @@ int main(int argc, char **argv)
 			fprintf(stderr, "%s: %s: command not found\n", argv[0], buffer_copy);
 		free(buffer_copy); }
 	free(buffer);
-	return (EXIT_SUCCESS); }
+	return (0); }
