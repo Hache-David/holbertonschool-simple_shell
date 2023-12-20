@@ -26,6 +26,9 @@ int main(int argc, char **argv)
 		buffer[bytesread - 1] = '\0';
 		length = 0;
 		buffer_copy = buff_copy(buffer_copy, length, buffer, index);
+		if (buffer_copy == NULL)
+		{
+			free(buffer), exit(EXIT_FAILURE); }
 		if (!strcmp(buffer_copy, "exit"))
 		{
 			free(buffer_copy);
@@ -47,5 +50,4 @@ int main(int argc, char **argv)
 			printf("%s: %s: command not found\n", argv[0], buffer_copy);
 		free(buffer_copy); }
 	free(buffer);
-	return (0);
-}
+	return (EXIT_SUCCESS); }
