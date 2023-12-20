@@ -28,6 +28,7 @@ int PATH_analyse(char *buffer_copy)
 		directory = opendir(dir);
 		if (directory == NULL)
 		{
+			perror("openddir");
 			free(path_copy);
 			return (0); }
 
