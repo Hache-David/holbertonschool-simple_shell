@@ -8,7 +8,6 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include <linux/limits.h>
 
 extern char **environ;
 
