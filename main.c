@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	char *buffer = NULL, *buffer_copy;
 
 	if (argc == 0)
-		return (EXIT_FAILURE);
+		return (2);
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 				execute_command(buffer, argv[0]);
 		}
 		else if (strlen(buffer_copy) != 0)
-			fprintf(stderr, "%s: %s: command not found\n", argv[0], buffer_copy);
+			fprintf(stderr, "%s: 1: %s: command not found\n", argv[0], buffer_copy);
 		free(buffer_copy); }
 	free(buffer);
 	return (EXIT_SUCCESS); }
