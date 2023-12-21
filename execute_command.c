@@ -36,6 +36,7 @@ void execute_command(char *buffer, char *argv_zero)
 			sprintf(command_path, "/bin/%s", args[0]);
 		if (execve(command_path, args, environ) == -1)
 			printf("%s: %s: No such file or directory\n", argv_zero, args[0]);
+		free(buffer);
 		exit(EXIT_SUCCESS);
 	}
 	else
