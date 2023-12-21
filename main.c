@@ -10,7 +10,8 @@ int main(int argc, char **argv)
 {
 	size_t bufsize = 0, length = 0, index = 0;
 	ssize_t bytesread;
-	char *buffer = NULL, *buffer_copy;
+	char *buffer = NULL;
+	char *buffer_copy = NULL;
 
 	if (argc == 0)
 		return (2);
@@ -24,7 +25,7 @@ int main(int argc, char **argv)
 			free(buffer);
 			exit(EXIT_SUCCESS); }
 		buffer[bytesread - 1] = '\0', length = 0;
-		buffer_copy = buff_copy(buffer_copy, length, buffer, index);
+		buffer_copy = buff_copy(length, buffer, index);
 		if (buffer_copy == NULL)
 			free(buffer), exit(EXIT_FAILURE);
 		if (!strcmp(buffer_copy, "exit"))
@@ -35,16 +36,17 @@ int main(int argc, char **argv)
 		{
 			if (!strcmp(buffer_copy, "env"))
 				print_environment();
-			else if (!strcmp(buffer_copy, "cd"))
+			/*else if (!strcmp(buffer_copy, "cd"))
 			{
 				if (chdir(buffer + length + 1) != 0)
 					perror("cd");
-			}
+			}*/
 			else
 				execute_command(buffer, argv[0]);
 		}
 		else if (strlen(buffer_copy) != 0)
 			fprintf(stderr, "%s: 1: %s: command not found\n", argv[0], buffer_copy);
-		free(buffer_copy); }
+		free(buffer_copy);
+	}
 	free(buffer);
 	return (EXIT_SUCCESS); }
