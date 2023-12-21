@@ -9,8 +9,10 @@
  *
  * Return: new string contain the first word.
 */
-char *buff_copy(char *buffer_copy, int length, char *buffer, int index)
+char *buff_copy(int length, char *buffer, int index)
 {
+	char *buffer_copy = NULL;
+
 	while (buffer[length] != ' ' && buffer[length] != '\0')
 		length++;
 
