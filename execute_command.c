@@ -25,7 +25,7 @@ void execute_command(char *buffer, char *argv_zero)
 	if (pid_number < 0)
 	{
 		perror("Error Fork\n");
-		exit(EXIT_FAILURE);
+		exit(2);
 	}
 
 	if (pid_number == 0)

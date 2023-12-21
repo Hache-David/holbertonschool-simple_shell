@@ -6,7 +6,7 @@
  *
  * Return: 1 if the command is found , 0 otherwise
 */
-int PATH_analyse(char *buffer_copy)
+int PATH_analyse(char *buffer_copy) /* ercfqer */
 {
 	DIR *directory;
 	struct dirent *entry;
