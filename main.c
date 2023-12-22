@@ -36,11 +36,6 @@ int main(int argc, char **argv)
 		{
 			if (!strcmp(buffer_copy, "env"))
 				print_environment();
-			/*else if (!strcmp(buffer_copy, "cd"))
-			{
-				if (chdir(buffer + length + 1) != 0)
-					perror("cd");
-			}*/
 			else
 				execute_command(buffer, argv[0]);
 		}
