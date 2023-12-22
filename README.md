@@ -61,7 +61,9 @@ Output:
 ./hsh: command not found: invalid_command
 ```
 
+## Flowchart
 
+![Flowchart](<image/Flowchart _ Project Simple Shell (1).png>)
 
 ## Author
 
