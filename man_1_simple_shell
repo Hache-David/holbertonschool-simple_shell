@@ -1,0 +1,56 @@
+                             MINI_SHELL(1)                          User Commands
+__________________________________________________________________________________________
+
+NAME
+       mini_shell - a basic shell program
+
+SYNOPSIS
+       mini_shell [OPTION]... [COMMAND]...
+
+DESCRIPTION
+       mini_shell is a basic command-line interpreter that allows users to
+       execute commands.
+
+OPTIONS
+       -h, --help
+              Display this help message and exit.
+
+COMMANDS
+       ls [DIRECTORY]
+              List files and directories in the specified DIRECTORY. If no
+              DIRECTORY is specified, the current directory is used.
+
+       echo [TEXT]
+              Display the specified TEXT on the standard output.
+
+       pwd    Print the current working directory.
+
+       mkdir [DIRECTORY]
+              Create a new DIRECTORY. If no DIRECTORY is specified, it will be
+              created in the current directory.
+
+       exit   Exit the shell.
+
+EXAMPLES
+       $ ls
+       file1  file2  directory1
+
+       $ pwd
+       /path/to/directory1
+
+       $ echo "Hello, World!"
+       Hello, World!
+
+       $ mkdir new_directory
+       $ ls
+       file1  file2  directory1  new_directory
+
+AUTHOR
+       This simple shell was created by [Hocine BOUABDALLAH and David HACHE].
+
+REPORTING BUGS
+       Please report bugs to [7278@holbertonstudents.com or 6720@holbertonstudents.com].
+
+SEE ALSO
+       bash(1), sh(1), pwd(1), ls(1), echo(1)
+
